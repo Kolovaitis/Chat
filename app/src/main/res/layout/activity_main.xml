@@ -44,7 +44,8 @@ android:foregroundGravity="bottom"
         android:layout_toStartOf="@+id/send"
         android:background="#ffeb3b"
         android:textSize="32dp"
-        android:textColor="#259e24" />
+        android:textColor="#259e24"
+        android:inputType="textPersonName" />
 
     <Button
         android:layout_width="wrap_content"

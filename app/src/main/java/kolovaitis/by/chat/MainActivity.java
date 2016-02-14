@@ -32,25 +32,32 @@ import java.util.prefs.Preferences;
 public class MainActivity extends AppCompatActivity {
 
     public static ClientThread clientThread;
-public static String currentMessage=null;
-public static int [] colors=new int[6];
-    public static int pastColor=3;
+    public static String currentMessage = null;
+    public static int[] colors = new int[6];
+    public static int pastColor = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-colors= new int[]{Color.parseColor("#ff9800"),
-        Color.parseColor("#ff5722"),
-        Color.parseColor("#00bcd4"),
-        Color.parseColor("#ffeb3b"),
-        Color.parseColor("#607d8b"),
-        Color.parseColor("#795548")
-};
-if(!isNetworkConnected()){
-    Toast.makeText(this,"Please on internet on your device and rerun the app",Toast.LENGTH_LONG).show();
-    finish();
-}
+        colors = new int[]{Color.parseColor("#ff9800"),
+                Color.parseColor("#ff5722"),
+                Color.parseColor("#00bcd4"),
+                Color.parseColor("#ffeb3b"),
+                Color.parseColor("#607d8b"),
+                Color.parseColor("#795548")
+        };
+        ((LinearLayout) findViewById(R.id.linearLayout)).addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+                ((ScrollView) findViewById(R.id.scrollView)).fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
+        if (!isNetworkConnected()) {
+            Toast.makeText(this, "Please on internet on your device and rerun the app", Toast.LENGTH_LONG).show();
+            finish();
+        }
         MyTask.canWork = true;
         MyTask.mainActivity = this;
         clientThread = new ClientThread();
@@ -60,23 +67,27 @@ if(!isNetworkConnected()){
 
 
     }
+
     @Override
-    protected void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         clientThread.setFinished(true);
-        MyTask.canWork=false;
+        MyTask.canWork = false;
     }
+
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         return cm.getActiveNetworkInfo() != null;
     }
-    public void send(View v){
 
-MainActivity.currentMessage=((EditText) findViewById(R.id.editText)).getText() + "";
+    public void send(View v) {
+
+        MainActivity.currentMessage = ((EditText) findViewById(R.id.editText)).getText() + "";
         Log.d("sending message", ((EditText) findViewById(R.id.editText)).getText() + "");
-        ((EditText)findViewById(R.id.editText)).setText("");
+        ((EditText) findViewById(R.id.editText)).setText("");
     }
+
     public void work() {
         Preferences pref = Preferences.systemRoot();
         if (pref.getBoolean("flag", false)) {
@@ -84,25 +95,26 @@ MainActivity.currentMessage=((EditText) findViewById(R.id.editText)).getText() +
 
             pref.putBoolean("flag", false);
             Log.d("text", pref.get("data", "no data"));
-            LinearLayout layout=(LinearLayout)findViewById(R.id.linearLayout);
-            LinearLayout linear=new LinearLayout(this);
+            LinearLayout layout = (LinearLayout) findViewById(R.id.linearLayout);
+            LinearLayout linear = new LinearLayout(this);
             linear.setOrientation(LinearLayout.VERTICAL);
             String string = pref.get("data", "no data");
-            TextView human=new TextView(this);
-            TextView textView=new TextView(this);
-            try{
-            human.setText(" " + string.substring(0, string.indexOf(":")) + ":");
+            TextView human = new TextView(this);
+            TextView textView = new TextView(this);
+            try {
+                human.setText(" " + string.substring(0, string.indexOf(":")) + ":");
                 human.setGravity(Gravity.LEFT);
                 human.setTextSize(15);
 
 
-                human.setPadding(0,20,0,0);
+                human.setPadding(0, 20, 0, 0);
 
                 linear.addView(human);
                 textView.setGravity(Gravity.LEFT);
-            textView.setText( " "+string.substring(string.indexOf(":")+1));
+                textView.setText(string.substring(string.indexOf(":") + 1));
 
-            linear.setGravity(View.TEXT_ALIGNMENT_CENTER);}catch (Exception e) {
+               // linear.setGravity(View.TEXT_ALIGNMENT_CENTER);
+            } catch (Exception e) {
                 textView.setText(string);
                 textView.setGravity(Gravity.CENTER);
 
@@ -112,13 +124,16 @@ MainActivity.currentMessage=((EditText) findViewById(R.id.editText)).getText() +
             textView.setBackgroundResource(R.drawable.message);
 
 
+            textView.setPadding(20, 0, 20, 5);
 
             linear.addView(textView);
             layout.addView(linear);
-            ((ScrollView)findViewById(R.id.scrollView)).scrollTo(0, layout.getHeight());
+
         }
 
         MyTask task = new MyTask();
+
+
         task.execute();
     }
 }
