@@ -59,5 +59,4 @@ android:foregroundGravity="bottom"
         android:layout_below="@+id/scrollView"
         android:onClick="send" />
 
-
 </RelativeLayout>
