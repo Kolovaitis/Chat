@@ -8,55 +8,70 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="kolovaitis.by.chat.MainActivity"
-    android:background="#8bc34a">
+    tools:context="kolovaitis.by.chat.MainActivity">
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
-        android:layout_above="@+id/editText"
-        android:background="#8bc34a"
-android:foregroundGravity="bottom"
-        android:orientation="vertical">
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="bottom"
-            android:background="#8bc34a"
-            android:id="@+id/linearLayout"
-            android:layout_alignBottom="@+id/scrollView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:id="@+id/imageView"
+            android:background="@drawable/animation" />
 
-        </LinearLayout>
-    </ScrollView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/send"
-        android:layout_toStartOf="@+id/send"
-        android:background="#ffeb3b"
-        android:textSize="32dp"
-        android:textColor="#259e24"
-        android:inputType="textPersonName" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView"
+                android:layout_above="@+id/editText"
+                android:foregroundGravity="bottom"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:id="@+id/linearLayout"
+                    android:layout_alignBottom="@+id/scrollView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/nothing">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="send"
-        android:id="@+id/send"
-        android:background="#259b24"
-        android:layout_alignBottom="@+id/editText"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/scrollView"
-        android:onClick="send" />
+                </LinearLayout>
+            </ScrollView>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/send"
+                android:layout_toStartOf="@+id/send"
+                android:textSize="32dp"
+                android:textColor="#9e9e9e"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="send"
+                android:id="@+id/send"
+                android:layout_alignBottom="@+id/editText"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/scrollView"
+                android:onClick="send"
+                android:textColor="#9e9e9e"
+                android:background="@drawable/nothing" />
+        </RelativeLayout>
+
+    </FrameLayout>
 
 </RelativeLayout>
